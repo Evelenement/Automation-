@@ -1,0 +1,22 @@
+Sub HighlightDuplicates()
+    Dim rng As Range, cell As Range
+    Dim dict As Object
+
+    'Adjust the column reference if needed.
+    Set rng = Range("A1", Range("A" & Rows.Count).End(xlUp))
+
+    Set dict = CreateObject("Scripting.Dictionary")
+
+    For Each cell In rng
+        If Len(cell.Value) > 0 Then
+            If dict.exists(cell.Value) Then
+                'Highlight both the current cell and the first occurrence
+                cell.Interior.Color = vbYellow
+                dict(cell.Value).Interior.Color = vbYellow
+            Else
+                'Store the first occurrence
+                dict.Add cell.Value, cell
+            End If
+        End If
+    Next cell
+End Sub
